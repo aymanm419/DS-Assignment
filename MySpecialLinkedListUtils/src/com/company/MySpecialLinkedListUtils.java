@@ -26,7 +26,6 @@ public class MySpecialLinkedListUtils {
          int minNum = 0x7FFFFFFF;
          while(head != null)
          {
-             System.out.println(head.getValue());
              sum += head.getValue();
              myArr.add(head.getValue());
              maxNum = Math.max(maxNum,head.getValue());
