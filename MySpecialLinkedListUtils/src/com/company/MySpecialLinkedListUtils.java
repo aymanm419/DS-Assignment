@@ -20,48 +20,46 @@ public class MySpecialLinkedListUtils {
     }
     public static double[] summary(LinkedListNode head)
     {
-         ArrayList<Integer> myArr = new ArrayList<Integer>();
          int sum = 0;
          int maxNum = 0x80000000;
          int minNum = 0x7FFFFFFF;
+         int Sz = 0;
+         LinkedListNode sHead = head;
          while(head != null)
          {
              sum += head.getValue();
-             myArr.add(head.getValue());
+             Sz++;
              maxNum = Math.max(maxNum,head.getValue());
              minNum = Math.min(minNum,head.getValue());
              head = head.getNext();
          }
-         return new double[]{(double)sum,(double)sum / (myArr.size()),(double)myArr.get(myArr.size() / 2),(double)maxNum,(double)minNum};
+         return new double[]{(double)sum,(double)sum / Sz,(Sz % 2 == 1 ? (double)getKthNode(sHead,Sz / 2).value :
+                 ((double)getKthNode(sHead,Sz / 2).value + (double)getKthNode(sHead,(Sz / 2) - 1).value) / 2),(double)maxNum,(double)minNum};
     }
     public static LinkedListNode reverse(LinkedListNode head)
     {
-        ArrayList<Integer> myArr = new ArrayList<Integer>();
-        while(head != null)
+        LinkedListNode nextNode = null,previousNode = null,Tmp = head;
+        while(Tmp != null)
         {
-            myArr.add(head.getValue());
-            head = head.getNext();
+            nextNode = Tmp.next;
+            Tmp.next = previousNode;
+            previousNode = Tmp;
+            Tmp = nextNode;
         }
-        for(int i = 0;i < myArr.size()/2;i++)
-        {
-            int tmp = myArr.get(i);
-            myArr.set(i, myArr.get(myArr.size() - i - 1));
-            myArr.set(myArr.size() - i - 1, tmp);
-        }
-        return arrayListToLinkedList(myArr);
+        return previousNode;
     }
     public static LinkedListNode evenIndexedElements(LinkedListNode head)
     {
-        ArrayList<Integer> myArr = new ArrayList<Integer>();
-        int cnt = 0;
-        while(head != null)
+        LinkedListNode Shead = head;
+        while(Shead != null)
         {
-            if(cnt % 2 == 0)
-                myArr.add(head.getValue());
-            cnt = (cnt + 1) % 2;
-            head = head.getNext();
+            LinkedListNode Tmp = Shead.next;
+            if(Tmp != null)
+                Tmp = Tmp.next;
+            Shead.next = Tmp;
+            Shead = Tmp;
         }
-        return arrayListToLinkedList(myArr);
+        return head;
     }
     public static ArrayList<Integer> sortArrayList(int l,int r,ArrayList<Integer> myArr)
     {
@@ -118,42 +116,49 @@ public class MySpecialLinkedListUtils {
     }
     public static LinkedListNode insertionSort(LinkedListNode head)
     {
-        LinkedListNode Tmp,NodeBefore;
-        int Place = 1;
-        while(getKthNode(head,Place) != null)
+        LinkedListNode curHead = null;
+        while(head != null)
         {
-            int j = Place;
-            while(j >= 1)
+            LinkedListNode Tmp = new LinkedListNode();
+            Tmp.value = head.value;
+            Tmp.next = curHead;
+            curHead = Tmp;
+            while(Tmp.next != null)
             {
-                NodeBefore = getKthNode(head,j-1);
-                Tmp = getKthNode(head,j);
-                if(NodeBefore.getValue() > Tmp.getValue())
+                if(Tmp.getValue() > Tmp.getNext().getValue())
                 {
-                    int Tvalue = NodeBefore.getValue();
-                    NodeBefore.value = Tmp.getValue();
-                    Tmp.value = Tvalue;
-                    j--;
-                    continue;
-                }
-                break;
+                    int TmpValue = Tmp.getValue();
+                    Tmp.value = Tmp.getNext().getValue();
+                    Tmp.next.value = TmpValue;
+                    Tmp = Tmp.next;
+                } else break;
             }
-            Place++;
+            head = head.getNext();
         }
-        return head;
+        return curHead;
     }
     public static LinkedListNode removeCentralNode(LinkedListNode head)
     {
         ArrayList<Integer> myArr = new ArrayList<Integer>();
-        while(head != null)
+        LinkedListNode Tmp = head;
+        int Sz = 0;
+        while(Tmp != null)
         {
-            myArr.add(head.getValue());
-            head = head.getNext();
+            Sz++;
+            Tmp = Tmp.getNext();
         }
-        if(myArr.size() % 2 == 0)
-            myArr.remove((myArr.size() / 2) - 1);
+        if(Sz <= 1)
+            return null;
+        if(Sz % 2 == 0) {
+            Tmp = getKthNode(head, (Sz / 2) - 2);
+            Tmp.next = Tmp.next.next;
+        }
         else
-            myArr.remove(myArr.size() / 2);
-        return arrayListToLinkedList(myArr);
+        {
+            Tmp = getKthNode(head, (Sz / 2) - 1);
+            Tmp.next = Tmp.next.next;
+        }
+        return head;
     }
     public static boolean palindrome(LinkedListNode head)
     {
@@ -179,13 +184,11 @@ public class MySpecialLinkedListUtils {
     }
     public static void main(String[] args) {
         ArrayList<Integer> arr = new ArrayList<Integer>();
-        arr.add(3);
         arr.add(2);
         arr.add(1);
-        arr.add(1);
-        arr.add(2);
         arr.add(3);
+        arr.add(1);
         LinkedListNode head = arrayListToLinkedList(arr);
-        System.out.println(palindrome(head));
+        printList(insertionSort(head));
     }
 }
