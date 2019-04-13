@@ -1,9 +1,9 @@
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-public class Main {
+public class Main implements IPlayersFinder {
     static Point dx[] = {new Point(0,1),new Point(0,-1),new Point(1,0),new Point(-1,0)};
-    public static void DFS(int x,int y,Component component,int n,int m,Boolean visited[][],String[] photo,int team)
+    public void DFS(int x,int y,Component component,int n,int m,Boolean visited[][],String[] photo,int team)
     {
         visited[x][y] = true;
         for(int i = 0;i < 4;i++)
@@ -21,7 +21,7 @@ public class Main {
         }
         return;
     }
-    public static java.awt.Point[] findPlayers(String[] photo,int team,int threshold)
+    public java.awt.Point[] findPlayers(String[] photo,int team,int threshold)
     {
 
         if(photo.length == 0)
@@ -76,7 +76,8 @@ public class Main {
                 "8PK8H8T8888TQR8"
 
         };
-        Point ans[] = findPlayers(s, 8, 9);
+        Main m = new Main();
+        Point ans[] = m.findPlayers(s, 8, 9);
         for(int i = 0;i < ans.length;i++)
             System.out.println(ans[i].getX() + " " + ans[i].getY());
     }
