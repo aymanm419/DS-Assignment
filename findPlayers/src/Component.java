@@ -2,7 +2,6 @@
 import java.awt.*;
 import java.util.*;
 import java.lang.*;
-import java.io.*;
 
 public class Component
 {
@@ -27,8 +26,6 @@ public class Component
 }
 class Comp implements Comparator<Point>
 {
-    // Used for sorting in ascending order of
-    // roll number
     public int compare(Point a, Point b)
     {
         int Xcompare = Double.compare(a.getX(),b.getX());
