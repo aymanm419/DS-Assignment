@@ -7,14 +7,14 @@ public class Stack implements IStack {
     public Object pop()
     {
         if(curPointer == 0)
-            throw new RuntimeException("Stack is Empty!");
+            throw new RuntimeException("Trying to pop from empty stack!");
         curPointer--;
         return Stk[curPointer];
     }
     public Object peek()
     {
         if(curPointer == 0)
-            throw new RuntimeException("Stack is Empty!");
+            throw new RuntimeException("Trying to peek from empty stack!");
         return Stk[curPointer - 1];
     }
     public void push(Object element)

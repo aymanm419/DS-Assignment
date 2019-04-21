@@ -38,10 +38,20 @@ public class Main {
                 stack.push(state2);
             } else if(state == 2)
             {
-                stack.pop();
+                try {
+                    stack.pop();
+                } catch (RuntimeException e)
+                {
+                    System.out.println(e.getMessage());
+                }
             } else if(state == 3)
             {
-                System.out.println(stack.peek());
+                try {
+                    System.out.println(stack.peek());
+                } catch (RuntimeException e)
+                {
+                    System.out.println(e.getMessage());
+                }
             } else if(state == 4)
             {
                 System.out.println(stack.size());
