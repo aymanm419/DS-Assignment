@@ -13,7 +13,7 @@ public class LinkedBasedTest {
         queue.enqueue(16);
         assertEquals(queue.dequeue(),15);
         assertEquals(queue.dequeue(),16);
-        for(int i = 0;i <= 100000;i++)
+        for(int i = 0;i <= 1000000;i++)
             queue.enqueue(i);
         assertEquals(queue.dequeue(),0);
     }
@@ -21,32 +21,32 @@ public class LinkedBasedTest {
     public void dequeueException()
     {
         LinkedBased queue = new LinkedBased();
-        for(int i = 0;i <= 100000;i++)
+        for(int i = 0;i <= 1000000;i++)
             queue.enqueue(i);
-        for(int i = 0;i <= 100001;i++)
+        for(int i = 0;i <= 1000001;i++)
             queue.dequeue();
 
     }
     @Test
     public void dequeue() {
         LinkedBased queue = new LinkedBased();
-        for(int i = 0;i <= 100000;i++)
+        for(int i = 0;i <= 1000000;i++)
             queue.enqueue(i);
-        for(int i = 0;i <= 100000;i++)
+        for(int i = 0;i <= 1000000;i++)
             queue.dequeue();
     }
 
     @Test
     public void isEmpty() {
         LinkedBased queue = new LinkedBased();
-        for(int i = 0;i <= 100000;i++)
+        for(int i = 0;i <= 1000000;i++)
             queue.enqueue(i);
-        for(int i = 0;i <= 100000;i++)
+        for(int i = 0;i <= 1000000;i++)
             queue.dequeue();
         assertEquals(queue.isEmpty(),true);
-        for(int i = 0;i <= 100000;i++)
+        for(int i = 0;i <= 1000000;i++)
             queue.enqueue(i);
-        for(int i = 0;i < 100000;i++)
+        for(int i = 0;i < 1000000;i++)
             queue.dequeue();
         assertEquals(queue.isEmpty(),false);
     }
@@ -54,14 +54,14 @@ public class LinkedBasedTest {
     @Test
     public void size() {
         LinkedBased queue = new LinkedBased();
-        for(int i = 0;i <= 100000;i++)
+        for(int i = 0;i <= 1000000;i++)
             queue.enqueue(i);
-        for(int i = 0;i <= 50000;i++)
+        for(int i = 0;i <= 500000;i++)
             queue.dequeue();
-        assertEquals(queue.size(),50000);
-        for(int i = 0;i < 100000;i++)
+        assertEquals(queue.size(),500000);
+        for(int i = 0;i < 1000000;i++)
             queue.enqueue(i);
-        assertEquals(queue.size(),150000);
+        assertEquals(queue.size(),1500000);
         while(!queue.isEmpty())
             queue.dequeue();
         assertEquals(queue.size(),0);

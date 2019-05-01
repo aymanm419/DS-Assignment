@@ -3,6 +3,8 @@ package eg.edu.alexu.csd.datastructure.queue.cs69_cs12_cs21;
 
 public class LinkedList {
     private node head = null;
+    private node tail = null;
+    private int length = 0;
     // private node node;
 
     /**
@@ -14,20 +16,14 @@ public class LinkedList {
         node i = head;
         node c2 = new node();
         c2.value = c;
+        length++;
         if (head == null) {
             head = c2;
+            tail = c2;
             return;
         }
-        while (i != null) {
-            if (i.next == null) {
-                c2.next = null;
-                i.next = c2;
-                i = null;
-            } else {
-                i = i.next;
-            }
-        }
-
+        tail.next = c2;
+        tail = c2;
     }
 
     /**
@@ -48,12 +44,6 @@ public class LinkedList {
      * @return Integer
      */
     public int getlength() {
-        node i = head;
-        int length = 0;
-        while (i != null) {
-            length++;
-            i = i.next;
-        }
         return length;
     }
 
@@ -65,13 +55,13 @@ public class LinkedList {
      */
     public Object get(int index) {
         node i = head;
-        int counter;
-        counter = getlength();
+        int counter = getlength();
         if (index == 0) {
             return head.value;
         } else if (index > counter) {
-            System.out.println("You Choose A Null Character");
-            return -1;
+            throw new RuntimeException("Linked List out of bounds");
+        } else if (index == counter - 1) {
+            return tail.value;
         } else {
             for (int count = 0; count < index; count++) {
                 i = i.next;
@@ -93,8 +83,7 @@ public class LinkedList {
         if (index == 0) {
             head.value = c;
         } else if (index > counter) {
-            System.out.println("You Choose A Null Character");
-
+            throw new RuntimeException("Linked list out of bounds");
         } else {
             for (int count = 0; count < index; count++) {
                 i = i.next;
@@ -112,7 +101,7 @@ public class LinkedList {
             head.next = null;
             head = null;
         }
-
+        length = 0;
 
     }
 
@@ -122,12 +111,7 @@ public class LinkedList {
      * @return boolean
      */
     public boolean isEmpty() {
-        node i = head;
-        if (i == null) {
-            return true;
-        } else {
-            return false;
-        }
+        return getlength() == 0;
     }
 
     /**
@@ -137,8 +121,7 @@ public class LinkedList {
      */
     public void remove(int index) {
         node i = head;
-        int counter;
-        counter = getlength();
+        int counter = getlength();
         node j = i.next;
         if (index == 0) {
             head = head.next;
@@ -157,6 +140,7 @@ public class LinkedList {
             i.next = j.next;
             j.next = null;
         }
+        length--;
     }
 
     /**
